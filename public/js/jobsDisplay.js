@@ -22,19 +22,7 @@ async function update() {
             }
             if (currentStatus != status && currentStatus != "") {
                 console.log("Status change");
-                // //window.__TAURI__.notification.sendNotification({title: `Pipeline`, body: `${job.scriptName}: ${status}`});
-                // let permissionGranted = await window.__TAURI__.notification.isPermissionGranted();
-                // if (!permissionGranted) {
-                //     const permission = await window.__TAURI__.notification.requestPermission();
-                //     permissionGranted = permission === 'granted';
-                // }
-                // if (permissionGranted) {
-                //     // alert("permission granted");
-                //     const permission = await window.__TAURI__.notification.sendNotification({title: `Pipeline`, body: `${job.scriptName}: ${status}`});
-                // }
-                // else {
-                //     // alert("Permission not granted");
-                // }
+                new Notification('Pipeline', { body: `${job.scriptName}: ${status}` });
             }
         }));
 }
