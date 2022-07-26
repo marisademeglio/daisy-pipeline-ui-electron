@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>DAISY Pipeline</title>
+</head>
+
+<body>
+    <header>
+        <h1>DAISY Pipeline</h1>
+    </header>
+    <main>
+        <div role="tablist" id="tabs">
+            <button id="start" tab-index="0" aria-selected="true" role="tab" data-jobid="start"><div class="tab-contents"><span>Start</span></div></button>
+        </div>
+        <div role="tabpanel" aria-labelledby="start" tab-index="0" class="selected">
+            <h2>Create a new job</h2>
+            <p style="font-style: italic; background-color: lightgoldenrodyellow; padding: .5rem">
+            This is a demo; actual Pipeline functionality is not available.
+            </p>
+            <fieldset>
+                <div>
+                    <label for="script-name">Pipeline script</label>
+                    <select id="script-name">
+                        <option value="daisy202-validator">DAISY 2.02 Validator</option>
+                        <option value="daisy202-to-epub3">DAISY 2.02 to EPUB 3</option>
+                        <option value="daisy3-to-daisy202">DAISY 3 to DAISY 2.02</option>
+                        <option value="daisy3-to-epub3">DAISY 3 to EPUB 3</option>
+                        <option value="dtbook-validator">DTBook Validator</option>
+                        <option value="dtbook-to-daisy3">DTBook to DAISY 3</option>
+                        <option value="dtbook-to-epub3">DTBook to EPUB 3</option>
+                        <option value="dtbook-to-odt">DTBook to ODT</option>
+                        <option value="dtbook-to-pef">DTBook to PEF</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="input-file">Choose file</label>
+                    <input id="input-file" type="file">
+                </div>
+                <div>
+                    <label for="option-1">Option #1</label>
+                    <input id="option-1" type="checkbox">
+                </div>
+                <div>
+                    <label for="option-2">Option #2</label>
+                    <input id="option-2" type="checkbox">
+                </div>
+                <button id="run-job">Run job</button>
+            </fieldset>    
+        </div>
+    </main>
+</body>
+<script type="module">
+    import * as jobsDisplay from './js/jobsDisplay.js';
+    import * as tabs from './js/tabs.js';
+    import * as jobsList from './js/jobsList.js';
+    import * as jobRunner from './js/jobRunner.js';
+
+(async () => {
+    await jobsDisplay.update();
+    
+    document.querySelector("#run-job").addEventListener('click', async e => {
+        // create a new job
+        let scriptName = Array.from(document.querySelectorAll("#script-name option")).find(opt => opt.selected).textContent;
+        let newJob = jobsList.addJob(scriptName);
+        jobRunner.runJob(newJob);
+        await jobsDisplay.update();
+    });
+
+
+    document.querySelector("#start").addEventListener('click', async e => {
+        tabs.selectTab(e.currentTarget);
+    });
+
+    // window.__TAURI__.event.listen("goto-tab", e => {
+    //     console.log("Event from Backend", e);
+
+    //     let res = tabs.getTabAndTabPanel(e.payload);
+    //     tabs.selectTab(res.tab);
+    // });
+})();
+</script>
+
+</html>
