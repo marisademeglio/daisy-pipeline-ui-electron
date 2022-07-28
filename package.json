@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A minimal Electron application",
   "main": "main.js",
+  "author": {"email": "marisa.demeglio@gmail.com", "name": "Marisa DeMeglio"},
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
