@@ -22,7 +22,9 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "name": "DAISY Pipeline"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
